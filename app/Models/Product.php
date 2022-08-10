@@ -2,10 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Stock;
 
-class Product extends Model
+class Product extends BaseModel
 {
-    use HasFactory;
+    protected $table = 'product';
+
+    public function inStock()
+    {
+        return $this->stock()->where('in_stock', true)->exists();
+    }
+
+    public function stock()
+    {
+        return $this->hasMany(Stock::class);
+    }
 }
